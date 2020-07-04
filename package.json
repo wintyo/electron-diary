@@ -1,0 +1,14 @@
+{
+  "name": "electron-diary",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "electron": "electron ./electron/"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "electron": "^9.0.5"
+  }
+}
