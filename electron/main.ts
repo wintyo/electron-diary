@@ -8,7 +8,7 @@ function createWindow() {
   });
 
   if (process.env.NODE_ENV === 'development') {
-    win.loadURL('https://www.google.com/');
+    win.loadURL('http://localhost:9030');
   }
 }
 
