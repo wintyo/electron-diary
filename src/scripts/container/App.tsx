@@ -28,6 +28,7 @@ const App = () => {
         <textarea
           className={styles.textarea}
           value={markdownText}
+          placeholder="今日の内容を記入してください"
           onChange={(event) => { setMarkdownText(event.currentTarget.value); }}
         />
       </div>

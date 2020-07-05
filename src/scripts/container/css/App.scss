@@ -3,20 +3,19 @@
   min-height: 100%;
 
   &__side {
+    padding: 5px;
     flex: 0 0 280px;
-    padding-right: 10px;
-    margin-right: 10px;
     border-right: solid 3px #ccc;
   }
 
   &__editor {
+    padding: 5px;
     flex: 1 1 0;
-    padding-right: 5px;
-    margin-right: 5px;
     border-right: solid 1px #ccc;
   }
 
   &__preview {
+    padding: 5px;
     flex: 1 1 0;
   }
 }
