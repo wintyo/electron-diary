@@ -3,8 +3,13 @@ import * as path from 'path';
 
 const config: webpack.Configuration = {
   target: 'electron-main',
+  node: {
+    __dirname: false,
+    __filename: false,
+  },
   entry: {
-    main: './main.ts'
+    main: './main.ts',
+    preload: './preload.ts',
   },
   output: {
     path: path.resolve(__dirname, './'),

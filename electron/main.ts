@@ -1,9 +1,12 @@
-import { BrowserWindow, app } from 'electron';
+import path from 'path';
+import { BrowserWindow, app, ipcMain } from 'electron';
 
 function createWindow() {
   const win = new BrowserWindow({
     webPreferences: {
-      nodeIntegration: true,
+      nodeIntegration: false,
+      contextIsolation: true,
+      preload: path.resolve(__dirname, './preload.js'),
     },
   });
 
@@ -29,4 +32,8 @@ app.on('activate', () => {
   if (BrowserWindow.getAllWindows.length === 0) {
     createWindow();
   }
+});
+
+ipcMain.on('message', (event, message) => {
+  console.log(message);
 });
