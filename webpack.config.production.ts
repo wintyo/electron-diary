@@ -10,7 +10,7 @@ import baseConfig from './webpack.config.base';
 const config = merge(baseConfig, {
   mode: 'production',
   output: {
-    path: path.resolve(__dirname, './electron/dist'),
+    path: path.resolve(__dirname, './electron/out'),
     publicPath: './',
   },
   plugins: [
@@ -28,6 +28,10 @@ config.module.rules.push({
     {
       loader: 'css-loader',
       options: {
+        modules: {
+          mode: 'local',
+          localIdentName: '[name]-[local]-[hash:base64:5]',
+        },
         // 0 => no loaders (default);
         // 1 => postcss-loader;
         // 2 => postcss-loader, sass-loader

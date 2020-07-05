@@ -12,7 +12,7 @@
   ],
   "scripts": {
     "start": "yarn && cross-env TS_NODE_PROJECT=tsconfig-for-node.json webpack-dev-server --config webpack.config.development.ts",
-    "build": "yarn && rimraf electron/dist cross-env TS_NODE_PROJECT=tsconfig-for-node.json webpack --config webpack.config.production.ts"
+    "build": "yarn && rimraf electron/out && cross-env TS_NODE_PROJECT=tsconfig-for-node.json webpack --config webpack.config.production.ts"
   },
   "author": "",
   "license": "MIT",

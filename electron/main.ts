@@ -14,6 +14,8 @@ function createWindow() {
 
   if (process.env.NODE_ENV === 'development') {
     win.loadURL('http://localhost:9030');
+  } else {
+    win.loadFile('out/index.html');
   }
 }
 
@@ -38,7 +40,7 @@ app.on('activate', () => {
 
 ipcMain.on('loadMonthTexts', async (event, targetMonth: Date) => {
   try {
-    const text = await fsPromises.readFile(`data/${formatDate(targetMonth, 'yyyy-MM')}.json`, {
+    const text = await fsPromises.readFile(path.resolve(app.getPath('userData'), `data/${formatDate(targetMonth, 'yyyy-MM')}.json`), {
       encoding: 'utf-8',
     });
     event.sender.send('res:loadMonthTexts', JSON.parse(text));
@@ -48,12 +50,13 @@ ipcMain.on('loadMonthTexts', async (event, targetMonth: Date) => {
 });
 
 ipcMain.on('saveMonthTexts', async (event, targetMonth: Date, textMap: { [dateStr: string]: string }) => {
+  console.log(app.getPath('userData'));
   try {
-    await fsPromises.mkdir('data');
+    await fsPromises.mkdir(path.resolve(app.getPath('userData'), 'data'));
   } catch {
   }
   await fsPromises.writeFile(
-    `data/${formatDate(targetMonth, 'yyyy-MM')}.json`,
+    path.resolve(app.getPath('userData'), `data/${formatDate(targetMonth, 'yyyy-MM')}.json`),
     JSON.stringify(textMap, null, '  ')
   );
 });
