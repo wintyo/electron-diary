@@ -36,10 +36,6 @@ app.on('activate', () => {
   }
 });
 
-ipcMain.on('message', (event, message) => {
-  console.log(message);
-});
-
 ipcMain.on('loadMonthTexts', async (event, targetMonth: Date) => {
   try {
     const text = await fsPromises.readFile(`data/${formatDate(targetMonth, 'yyyy-MM')}.json`, {
@@ -52,7 +48,11 @@ ipcMain.on('loadMonthTexts', async (event, targetMonth: Date) => {
 });
 
 ipcMain.on('saveMonthTexts', async (event, targetMonth: Date, textMap: { [dateStr: string]: string }) => {
-  fsPromises.writeFile(
+  try {
+    await fsPromises.mkdir('data');
+  } catch {
+  }
+  await fsPromises.writeFile(
     `data/${formatDate(targetMonth, 'yyyy-MM')}.json`,
     JSON.stringify(textMap, null, '  ')
   );
