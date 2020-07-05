@@ -6,15 +6,20 @@ import { debounce } from 'lodash-es';
 
 import styles from './css/App.scss';
 
+// components
 import Calender from '../components/Calendar';
+import DayList from '../components/DayList';
 import ReactMarkdown from 'react-markdown';
+
+// interfaces
+import { ITextMap } from '~/interfaces/App';
 
 /**
  * テキストの保存
  * @param targetMonth - 対象月
  * @param textMap - テキストデータ
  */
-const saveTextData = debounce((targetMonth: Date, textMap: { [dateStr: string]: string }) => {
+const saveTextData = debounce((targetMonth: Date, textMap: ITextMap) => {
   const yearMonthStr = formatDate(targetMonth, 'yyyyMM');
   const updateTextMap = Object.assign(
     {},
@@ -30,14 +35,13 @@ const saveTextData = debounce((targetMonth: Date, textMap: { [dateStr: string]: 
 const App = () => {
   const [targetMonth, setTargetMonth] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const [markdownTextMap, setMarkdownTextMap] = useState<{ [dateStr: string]: string }>({});
+  const [markdownTextMap, setMarkdownTextMap] = useState<ITextMap>({});
 
   const selectedDateStr = useMemo(() => formatDate(selectedDate, 'yyyyMMdd'), [selectedDate]);
 
   useEffect(() => {
     window.IPC.loadMonthTexts(targetMonth)
-      .then(((loadedTextMap: { [dateStr: string]: string }) => {
-        console.log(loadedTextMap);
+      .then(((loadedTextMap: ITextMap) => {
         setMarkdownTextMap({
           ...markdownTextMap,
           ...loadedTextMap,
@@ -48,12 +52,22 @@ const App = () => {
   return (
     <div className={styles.root}>
       <div className={styles.root__side}>
-        <Calender
-          targetMonth={targetMonth}
-          selectedDate={selectedDate}
-          onChangeMonth={setTargetMonth}
-          onChangeSelectedDate={setSelectedDate}
-        />
+        <div className={styles.root__side__calendar}>
+          <Calender
+            targetMonth={targetMonth}
+            selectedDate={selectedDate}
+            onChangeMonth={setTargetMonth}
+            onChangeSelectedDate={setSelectedDate}
+          />
+        </div>
+        <div className={styles.root__side__list}>
+          <DayList
+            targetMonth={targetMonth}
+            selectedDate={selectedDate}
+            textMap={markdownTextMap}
+            onChangeSelectedDate={setSelectedDate}
+          />
+        </div>
       </div>
       <div className={styles.root__editor}>
         <textarea
