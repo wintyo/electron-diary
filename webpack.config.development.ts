@@ -55,6 +55,10 @@ config.module.rules.push({
       loader: 'css-loader',
       options: {
         sourceMap: true,
+        modules: {
+          mode: 'local',
+          localIdentName: '[name]-[local]-[hash:base64:5]',
+        },
         // 0 => no loaders (default);
         // 1 => postcss-loader;
         // 2 => postcss-loader, sass-loader
