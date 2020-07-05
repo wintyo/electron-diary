@@ -16,7 +16,8 @@
     "baseUrl": "./",
     "types": [
       "@types/node",
-      "./src/scripts/@types/window"
+      "./src/scripts/@types/window",
+      "./src/scripts/@types/resources"
     ],
     "jsx": "react",
     "paths": {

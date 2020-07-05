@@ -17,11 +17,17 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "classnames": "^2.2.6",
+    "date-fns": "^2.14.0",
+    "lodash": "^4.17.15",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-markdown": "^4.3.1",
     "reset-css": "^5.0.1"
   },
   "devDependencies": {
+    "@types/classnames": "^2.2.10",
+    "@types/lodash": "^4.14.157",
     "@types/react-dom": "^16.9.8",
     "@types/webpack": "^4.41.18",
     "autoprefixer": "^9.8.4",
