@@ -43,7 +43,7 @@ function createCalendarList(year: number, month: number, offset = 0) {
 
   // 来月の日を埋める
   const nextPaddingDays = (() => {
-    const paddingDayCount = (49 - (prevPaddingDays.length + currentDays.length));
+    const paddingDayCount = (42 - (prevPaddingDays.length + currentDays.length));
     return range(1, paddingDayCount + 1).map((day) => ({
       date: new Date(year, month + 1, day),
       day,
