@@ -11,6 +11,7 @@
   },
   "license": "MIT",
   "dependencies": {
+    "date-fns": "^2.14.0",
     "electron": "^9.0.5"
   },
   "devDependencies": {

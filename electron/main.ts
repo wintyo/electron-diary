@@ -1,4 +1,6 @@
 import path from 'path';
+import { promises as fsPromises } from 'fs';
+import { format as formatDate } from 'date-fns';
 import { BrowserWindow, app, ipcMain } from 'electron';
 
 function createWindow() {
@@ -36,4 +38,22 @@ app.on('activate', () => {
 
 ipcMain.on('message', (event, message) => {
   console.log(message);
+});
+
+ipcMain.on('loadMonthTexts', async (event, targetMonth: Date) => {
+  try {
+    const text = await fsPromises.readFile(`data/${formatDate(targetMonth, 'yyyy-MM')}.json`, {
+      encoding: 'utf-8',
+    });
+    event.sender.send('res:loadMonthTexts', JSON.parse(text));
+  } catch {
+    event.sender.send('res:loadMonthTexts', {});
+  }
+});
+
+ipcMain.on('saveMonthTexts', async (event, targetMonth: Date, textMap: { [dateStr: string]: string }) => {
+  fsPromises.writeFile(
+    `data/${formatDate(targetMonth, 'yyyy-MM')}.json`,
+    JSON.stringify(textMap, null, '  ')
+  );
 });
