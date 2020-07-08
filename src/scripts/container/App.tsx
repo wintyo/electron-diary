@@ -32,6 +32,21 @@ const saveTextData = debounce((targetMonth: Date, textMap: ITextMap) => {
   return window.IPC.saveMonthTexts(targetMonth, updateTextMap);
 }, 500);
 
+/**
+ * 意図した表示になるように少し修正する
+ * @param markdownText - マークダウンテキスト
+ */
+const adjustMarkdownText = (markdownText?: string) => {
+  if (!markdownText) {
+    return '';
+  }
+  // 改行の後ろにスペース2つを入れてプレビューでも改行されるようにする
+  return markdownText
+    .split('\n')
+    .map((text) => text + '  ')
+    .join('\n');
+}
+
 const App = () => {
   const [targetMonth, setTargetMonth] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -87,7 +102,7 @@ const App = () => {
       <div className={styles.root__preview}>
         <ReactMarkdown
           className={styles.preview}
-          source={markdownTextMap[selectedDateStr]}
+          source={adjustMarkdownText(markdownTextMap[selectedDateStr])}
         />
       </div>
     </div>
